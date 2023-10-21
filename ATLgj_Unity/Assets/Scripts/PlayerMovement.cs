@@ -14,7 +14,10 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody _body;
     private Vector3 _inputs = Vector3.zero;
-    [SerializeField] private bool _isGrounded = true;
+    private Vector3 _turnedInputs;
+    private Vector3 _targetDirection;
+    [SerializeField] private Vector3 _camDirection;
+    private bool _isGrounded = true;
     private Transform _groundChecker;
     private Camera _cam;
 
@@ -22,23 +25,16 @@ public class PlayerMovement : MonoBehaviour {
         _body = GetComponent<Rigidbody>();
         _groundChecker = transform.GetChild(0);
         _cam = Camera.main;
+        _inputs = Vector3.zero;
     }
 
     void Update() {
         _isGrounded = Physics.CheckSphere(_groundChecker.position, groundDistance, ground, QueryTriggerInteraction.Ignore);
-        _inputs = Vector3.zero;
         _inputs.x = Input.GetAxis("Horizontal");
         _inputs.z = Input.GetAxis("Vertical");
-        
-        Vector3 camDirection = _cam.transform.rotation * _inputs; //This takes all 3 axes (good for something flying in 3d space)    
-        Vector3 targetDirection = new Vector3(camDirection.x, 0, camDirection.z); //This line removes the "space ship" 3D flying effect. We take the cam direction but remove the y axis value
-        
-        if (_inputs != Vector3.zero) {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(targetDirection),
-                Time.deltaTime * turnSpeed);
-        }
+        float facing = _cam.transform.eulerAngles.y;
+        _turnedInputs = Quaternion.Euler( 0, facing, 0) * _inputs;
+
 
         if (Input.GetButtonDown("Jump") && _isGrounded) {
             StartCoroutine("jump");
@@ -52,7 +48,34 @@ public class PlayerMovement : MonoBehaviour {
                 0, (Mathf.Log(1f / (Time.deltaTime * _body.drag + 1)) / -Time.deltaTime)));
         _body.AddForce(new Vector3(dashVelocity.x, 1 * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), dashVelocity.z), ForceMode.VelocityChange);
     }
+    
     void FixedUpdate() {
-        _body.MovePosition(_body.position + _inputs.normalized * (speed * Time.fixedDeltaTime));
+        _camDirection = _turnedInputs;
+        if (_camDirection.z < 0) {
+            _targetDirection = new Vector3(_camDirection.x, 0, _camDirection.z * -1);
+        } else {
+            _targetDirection = new Vector3(_camDirection.x, 0, _camDirection.z);
+        }
+
+        if (_inputs != Vector3.zero) {
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(_targetDirection),
+                Time.deltaTime * turnSpeed);
+        }
+        
+        if (_isGrounded) {
+            if (_camDirection.z < 0) {
+                _body.velocity = new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z * -1) * speed;
+            } else {
+                _body.velocity = _targetDirection.normalized * speed;    
+            }
+        } else {
+            if (_camDirection.z < 0) {
+                _body.AddForce(new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z * -1) * (speed * 10), ForceMode.Force);   
+            } else {
+                _body.AddForce(_targetDirection.normalized * (speed * 10), ForceMode.Force);   
+            }
+        }
     }
 }
