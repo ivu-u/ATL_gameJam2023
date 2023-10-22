@@ -163,6 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad5ac3de3d5fed428a5fbe29e10056f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwSpeed: 20
+  throwSpeed: 30
   throwDistance: 300
   scrollSensitivity: 30
