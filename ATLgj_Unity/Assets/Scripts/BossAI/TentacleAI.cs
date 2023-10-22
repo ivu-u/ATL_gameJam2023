@@ -15,7 +15,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     [SerializeField] CinemachineDollyCart cart = default;
     [SerializeField] LayerMask terrainLayer = default;  // default so it doesn't filter any layers
     public WinLoseLogic winLoseLogic;
-    PlayerMovement player;
+    PlayerMovementTutorial player;
     // ui here
 
     [HideInInspector] public Vector3 startPos, endPos;
@@ -38,7 +38,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
 
         currentHealth = totalHealth;
 
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<PlayerMovementTutorial>();
 
         AI();
     }
