@@ -121,8 +121,10 @@ MonoBehaviour:
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
+  winLoseLogic: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
+  currentHealth: 0
   endPosRadius: 20
 --- !u!1 &2217876656908648517
 GameObject:
@@ -159,6 +161,7 @@ Transform:
   m_LocalScale: {x: 1.7933, y: 1.7933, z: 1.7933}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7457647658738802864}
   - {fileID: 158809410659524862}
   m_Father: {fileID: 3540012594428107128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -178,6 +181,7 @@ MonoBehaviour:
   invulnerabilityTime: 0.1
   hitAngle: 360
   hitForwardRotation: 360
+  currentHitpoints: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -217,7 +221,6 @@ MonoBehaviour:
   OnResetDamage:
     m_PersistentCalls:
       m_Calls: []
-  onDamageMessageRecievers: []
 --- !u!33 &6745525661452259208
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -233,7 +236,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2217876656908648517}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1306,6 +1309,10 @@ PrefabInstance:
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 419641176639677719, guid: 62804179df8259a4a8ecbdc1290dc261, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2563828799079819419, guid: 62804179df8259a4a8ecbdc1290dc261, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1721,6 +1728,84 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2563828799079819419, guid: 62804179df8259a4a8ecbdc1290dc261, type: 3}
   m_PrefabInstance: {fileID: 7554775856941272060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8639202254559021155
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6161142526096364278}
+    m_Modifications:
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004575764630516329, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+      propertyPath: m_Name
+      value: OctopusTentacleTip Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+--- !u!4 &7457647658738802864 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1196408997978630355, guid: 2112998b06e607d4f8e6fc261e25ab7c, type: 3}
+  m_PrefabInstance: {fileID: 8639202254559021155}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8744580909650975947
 PrefabInstance:

@@ -108,21 +108,16 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     }
 
     public void OnRecieveMessage(MessageType type, object sender, object msg) {
+        Damageable damageable = sender as Damageable;
+        Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
+
+        if (message.damageAmount > currentHealth) { message.damageAmount = currentHealth; }
+
         if (type == MessageType.DAMAGED) {
-            Damageable damageable = sender as Damageable;
-            Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
             currentHealth -= message.damageAmount;
             
-            //if (currentHealth <= 0) {
-            //    Debug.Log("u won");
-            //    Destroy(this);
-            //}
-
-            // update
         }
         else if (type == MessageType.DEAD) {
-            Damageable damageable = sender as Damageable;
-            Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
             currentHealth -= message.damageAmount;
             currentHealth -= message.damageAmount;
         }

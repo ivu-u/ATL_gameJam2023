@@ -7,7 +7,7 @@ public class Boomerang : MonoBehaviour
 {
     private bool _throw;
 
-    private GameObject player;
+    private GameObject direction;
     private GameObject weapon;
 
     Transform itemToRotate; // weapon that is a child of the empty game object
@@ -22,14 +22,14 @@ public class Boomerang : MonoBehaviour
     private void Start() {
         _throw = false;    // boomerang not reutning yet
 
-        player = GameObject.Find("weapon");     //gameObject to return to
+        direction = GameObject.Find("weapon");     //gameObject to return to
         weapon = GameObject.Find("weapon");   // the weapon
 
         weapon.GetComponent<MeshRenderer>().enabled = false; // turn off mesh rendereer to make weapon invisible
 
         itemToRotate = gameObject.transform;
 
-        throwDirection = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z) + player.transform.forward * throwDistance;
+        throwDirection = new Vector3(direction.transform.position.x, direction.transform.position.y + 1, direction.transform.position.z) + direction.transform.forward * throwDistance;
 
         StartCoroutine(Boom());
     }
@@ -54,11 +54,11 @@ public class Boomerang : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, throwDirection, Time.deltaTime * throwSpeed); // change the position to the location in front of player
         } else {
             // return to player
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z), Time.deltaTime * 40);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(direction.transform.position.x, direction.transform.position.y + 1, direction.transform.position.z), Time.deltaTime * 40);
         }
 
         // once it's close to the player make weapon visible & destroy clone
-        if (!_throw && Vector3.Distance(player.transform.position, transform.position) < 1.5) {
+        if (!_throw && Vector3.Distance(direction.transform.position, transform.position) < 1.5) {
             weapon.GetComponent<MeshRenderer>().enabled = true;
             Destroy(this.gameObject);
         }
