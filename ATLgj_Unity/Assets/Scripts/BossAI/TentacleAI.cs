@@ -1,7 +1,5 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 // reference: https://learn.unity.com/tutorial/using-animation-rigging-damped-transform?uv=2019.3&projectId=5f9350ffedbc2a0020193331
@@ -32,8 +30,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
 
         foreach (Damageable d in damageables) {
             totalHealth += d.currentHitpoints;
-            Debug.Log(d);
-            d.addToListeners(this);
+            d.addToListeners();
         }
 
         currentHealth = totalHealth;

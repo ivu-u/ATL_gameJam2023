@@ -30,8 +30,9 @@ public partial class Damageable : MonoBehaviour {
 
     System.Action schedule;
 
-    public void addToListeners(MonoBehaviour mono) {
-        onDamageMessageRecievers.Add(mono);
+    public void addToListeners() {
+        Debug.Log("test");
+        //onDamageMessageRecievers.Add(mono);
     }
 
     private void Start() {
