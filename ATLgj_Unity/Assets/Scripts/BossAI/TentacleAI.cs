@@ -69,14 +69,16 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     /// <summary>
     /// Determins two random postions in the world for the start and end points, but uses player position for the middle point of the arc
     /// </summary>
+    public float endPosRadius = 50.0f;
     private void UpdatePath() {
         Debug.Log("create path");
         Vector3 playerPos = player.transform.position; // might have to add ridgid body stuff here
-        playerPos.y = Mathf.Max(10, playerPos.y);
+        //playerPos.y = Mathf.Max(10, playerPos.y);
         Vector3 randomRange = Random.insideUnitSphere * 100;
         randomRange.y = 0;
         startPos = playerPos + randomRange;
-        endPos = playerPos - randomRange;
+        //endPos = playerPos - randomRange;
+        endPos = playerPos;
 
         // checks if the end/start postions touch ground, and if it does set the postions there
         if (Physics.Raycast(startPos, Vector3.down, out hitInfo, 1000, terrainLayer.value)) {
