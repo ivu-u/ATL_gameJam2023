@@ -63,14 +63,4 @@ public class Boomerang : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    //private void OnCollisionEnter(Collision collision) {
-    //    if (collision.transform.CompareTag("Enemy") && collision.transform.TryGetComponent(out Damageable damageable)) {
-    //        Debug.Log("boss hit");
-    //        damageable.ApplyDamage(new Damageable.DamageMessage() {
-    //            damageAmount = 1,
-    //            damageSource = transform.position,
-    //        });
-    //    }
-    //}
 }
