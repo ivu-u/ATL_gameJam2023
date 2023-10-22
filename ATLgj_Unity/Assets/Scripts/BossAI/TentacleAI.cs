@@ -70,7 +70,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     /// Determins two random postions in the world for the start and end points, but uses player position for the middle point of the arc
     /// </summary>
     private void UpdatePath() {
-        Debug.Log("path");
+        Debug.Log("create path");
         Vector3 playerPos = player.transform.position; // might have to add ridgid body stuff here
         playerPos.y = Mathf.Max(10, playerPos.y);
         Vector3 randomRange = Random.insideUnitSphere * 100;
