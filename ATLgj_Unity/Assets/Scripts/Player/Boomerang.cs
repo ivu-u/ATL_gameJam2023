@@ -12,20 +12,24 @@ public class Boomerang : MonoBehaviour
 
     Transform itemToRotate; // weapon that is a child of the empty game object
 
-    Vector3 locationInFrontOfPlayer;
+    Vector3 throwDirection;
+    public float throwSpeed; // The maximum distance the boomerang can travel
+    public float throwDistance;
+
+    private float height;
+    public float scrollSensitivity;
 
     private void Start() {
         _throw = false;    // boomerang not reutning yet
 
-        player = GameObject.Find("Player");     //gameObject to return to
+        player = GameObject.Find("weapon");     //gameObject to return to
         weapon = GameObject.Find("weapon");   // the weapon
 
         weapon.GetComponent<MeshRenderer>().enabled = false; // turn off mesh rendereer to make weapon invisible
 
         itemToRotate = gameObject.transform;
 
-        // adjust the location of the player | here we add to the Y pos so the weapon doesn't go too low | pick a location infront of player
-        locationInFrontOfPlayer = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z) + player.transform.forward * 10f;
+        throwDirection = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z) + player.transform.forward * throwDistance;
 
         StartCoroutine(Boom());
     }
@@ -40,7 +44,14 @@ public class Boomerang : MonoBehaviour
         itemToRotate.transform.Rotate(0, Time.deltaTime * 500, 0);
 
         if (_throw) {
-            transform.position = Vector3.MoveTowards(transform.position, locationInFrontOfPlayer, Time.deltaTime * 40); // change the position to the location in front of player
+            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+            //height += scrollInput * scrollSensitivity;
+
+            throwDirection.y += scrollInput * scrollSensitivity;
+
+            //Debug.Log("throwdir y: " + throwDirection.y);
+
+            transform.position = Vector3.MoveTowards(transform.position, throwDirection, Time.deltaTime * throwSpeed); // change the position to the location in front of player
         } else {
             // return to player
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z), Time.deltaTime * 40);
@@ -52,4 +63,14 @@ public class Boomerang : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    //private void OnCollisionEnter(Collision collision) {
+    //    if (collision.transform.CompareTag("Enemy") && collision.transform.TryGetComponent(out Damageable damageable)) {
+    //        Debug.Log("boss hit");
+    //        damageable.ApplyDamage(new Damageable.DamageMessage() {
+    //            damageAmount = 1,
+    //            damageSource = transform.position,
+    //        });
+    //    }
+    //}
 }
