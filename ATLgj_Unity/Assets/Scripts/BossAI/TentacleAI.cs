@@ -119,12 +119,12 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
         }
         else if (type == MessageType.DEAD) {
             currentHealth -= message.damageAmount;
-            currentHealth -= message.damageAmount;
         }
 
         if (currentHealth <= 0) {
-            Debug.Log("u won");
-            winLoseLogic.Win();
+            Debug.Log(currentHealth);
+            winLoseLogic.updateNumEnemies();
+            Destroy(this.gameObject);
         }
     }
 
