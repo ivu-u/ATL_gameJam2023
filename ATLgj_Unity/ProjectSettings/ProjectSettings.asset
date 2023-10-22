@@ -640,7 +640,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED
+    Standalone: MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED;ATMOSPHERIC_HEIGHT_FOG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
