@@ -17,21 +17,27 @@ public partial class Damageable : MonoBehaviour {
     public float hitForwardRotation = 360.0f;
 
     public bool isInvunerable {  get; set; }
-    public int currentHitpoints { get; private set; }
+    public int currentHitpoints;
 
     public UnityEvent OnDeath, OnRecieveDamage, OnHitWhileInvunerable, OnBecomeVunerable, OnResetDamage;
 
     [Tooltip("When this gameObject is damaged, these other gameObjects are notified.")]
-    public List<MonoBehaviour> onDamageMessageRecievers;
+    [EnforceType(typeof(IMessageReceiver))]
+    List<MonoBehaviour> onDamageMessageRecievers;
 
     protected float m_timeSinceLastHit = 0.0f;
     protected Collider m_Collider;
 
     System.Action schedule;
 
+    public void addToListeners(MonoBehaviour mono) {
+        onDamageMessageRecievers.Add(mono);
+    }
+
     private void Start() {
         ResetDamage();
         m_Collider = GetComponent<Collider>();
+        onDamageMessageRecievers = new List<MonoBehaviour>();
     }
 
     private void Update() {
@@ -85,7 +91,9 @@ public partial class Damageable : MonoBehaviour {
         var messageType = currentHitpoints <= 0 ? MessageType.DEAD : MessageType.DAMAGED;
 
         // send message to all recievers
+        Debug.Log(onDamageMessageRecievers.Count);
         for (var i = 0; i < onDamageMessageRecievers.Count; ++i) {
+            Debug.Log(onDamageMessageRecievers[i]);
             var reciever = onDamageMessageRecievers[i] as IMessageReceiver;
             reciever.OnRecieveMessage(messageType, this, data);
         }

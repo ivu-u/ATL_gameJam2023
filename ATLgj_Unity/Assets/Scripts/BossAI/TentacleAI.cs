@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 // reference: https://learn.unity.com/tutorial/using-animation-rigging-damped-transform?uv=2019.3&projectId=5f9350ffedbc2a0020193331
@@ -13,6 +14,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     [SerializeField] CinemachineSmoothPath path = default;
     [SerializeField] CinemachineDollyCart cart = default;
     [SerializeField] LayerMask terrainLayer = default;  // default so it doesn't filter any layers
+    public WinLoseLogic winLoseLogic;
     PlayerMovement player;
     // ui here
 
@@ -20,7 +22,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
 
     RaycastHit hitInfo;
     int totalHealth;
-    int currentHealth;
+    public int currentHealth;
     Damageable[] damageables;        // health/hit logic for body segments
 
     private void Start() {
@@ -30,6 +32,8 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
 
         foreach (Damageable d in damageables) {
             totalHealth += d.currentHitpoints;
+            Debug.Log(d);
+            d.addToListeners(this);
         }
 
         currentHealth = totalHealth;
@@ -78,7 +82,7 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
         randomRange.y = 0;
         startPos = playerPos + randomRange;
         //endPos = playerPos - randomRange;
-        endPos = playerPos;
+        endPos = playerPos + Random.insideUnitSphere * endPosRadius;
 
         // checks if the end/start postions touch ground, and if it does set the postions there
         if (Physics.Raycast(startPos, Vector3.down, out hitInfo, 1000, terrainLayer.value)) {
@@ -109,11 +113,23 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
             Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
             currentHealth -= message.damageAmount;
             
-            if (currentHealth <= 0) {
-                // lost the game
-            }
+            //if (currentHealth <= 0) {
+            //    Debug.Log("u won");
+            //    Destroy(this);
+            //}
 
             // update
+        }
+        else if (type == MessageType.DEAD) {
+            Damageable damageable = sender as Damageable;
+            Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
+            currentHealth -= message.damageAmount;
+            currentHealth -= message.damageAmount;
+        }
+
+        if (currentHealth <= 0) {
+            Debug.Log("u won");
+            winLoseLogic.Win();
         }
     }
 
