@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
 
-public class Boomerang : MonoBehaviour
+public class Boom1 : MonoBehaviour
 {
 
     // Update is called once per frame

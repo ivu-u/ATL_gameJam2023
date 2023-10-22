@@ -21,27 +21,56 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     RaycastHit hitInfo;
     int totalHealth;
     int currentHealth;
-    // Damageable[] damageables;        // look at later
+    Damageable[] damageables;        // health/hit logic for body segments
 
     private void Start() {
         // set ui
-        //set damageables
+        
+        damageables = GetComponentsInChildren<Damageable>();
+
+        foreach (Damageable d in damageables) {
+            totalHealth += d.currentHitpoints;
+        }
 
         currentHealth = totalHealth;
 
-        player = Object.FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<PlayerMovement>();
 
         AI();
     }
 
     private void AI() {
+        UpdatePath();
+        StartCoroutine(FollowPath());
+        IEnumerator FollowPath() {
+            
+            while (true) {
+                //play leaving ground effect
+                yield return new WaitUntil(() => cart.m_Position >= 0.06f);
+                // ground contact stuff
+                yield return new WaitUntil(() => cart.m_Position >= 0.23f);
 
+                // wait to reenter ground
+                yield return new WaitUntil(() => cart.m_Position >= 0.60f);
+                // stuff
+                yield return new WaitUntil(() => cart.m_Position >= 0.90f);
+
+                // wait a beat to come out of ground again
+                yield return new WaitUntil(() => cart.m_Position >= 0.99f);
+                yield return new WaitForSeconds(Random.Range(1, 2));
+
+                // reset path
+                UpdatePath();
+                yield return new WaitUntil(() => cart.m_Position <= 0.05);
+            } 
+        }
     }
 
     /// <summary>
     /// Determins two random postions in the world for the start and end points, but uses player position for the middle point of the arc
     /// </summary>
     private void UpdatePath() {
+        Debug.Log("path");
         Vector3 playerPos = player.transform.position; // might have to add ridgid body stuff here
         playerPos.y = Mathf.Max(10, playerPos.y);
         Vector3 randomRange = Random.insideUnitSphere * 100;
@@ -73,6 +102,28 @@ public class TentacleAI : MonoBehaviour, IMessageReceiver {
     }
 
     public void OnRecieveMessage(MessageType type, object sender, object msg) {
-        throw new System.NotImplementedException();
+        if (type == MessageType.DAMAGED) {
+            Damageable damageable = sender as Damageable;
+            Damageable.DamageMessage message = (Damageable.DamageMessage)msg;
+            currentHealth -= message.damageAmount;
+            
+            if (currentHealth <= 0) {
+                // lost the game
+            }
+
+            // update
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        Debug.Log("collision enter");
+        if (collision.transform.TryGetComponent(out Damageable damageable)) {
+            Debug.Log("hit ship");
+            Damageable.DamageMessage message = new Damageable.DamageMessage() { 
+                damageAmount = 1,
+                damageSource = transform.position,
+            };
+            damageable.ApplyDamage(message);
+        }
     }
 }
