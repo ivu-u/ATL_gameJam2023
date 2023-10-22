@@ -16,10 +16,12 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 _inputs = Vector3.zero;
     private Vector3 _turnedInputs;
     private Vector3 _targetDirection;
-    [SerializeField] private Vector3 _camDirection;
+    //[SerializeField] private Vector3 _camDirection;
     private bool _isGrounded = true;
     private Transform _groundChecker;
     private Camera _cam;
+
+    public GameObject test;
 
     void Start() {
         _body = GetComponent<Rigidbody>();
@@ -32,9 +34,6 @@ public class PlayerMovement : MonoBehaviour {
         _isGrounded = Physics.CheckSphere(_groundChecker.position, groundDistance, ground, QueryTriggerInteraction.Ignore);
         _inputs.x = Input.GetAxis("Horizontal");
         _inputs.z = Input.GetAxis("Vertical");
-        float facing = _cam.transform.eulerAngles.y;
-        _turnedInputs = Quaternion.Euler( 0, facing, 0) * _inputs;
-
 
         if (Input.GetButtonDown("Jump") && _isGrounded) {
             StartCoroutine("jump");
@@ -50,14 +49,19 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     void FixedUpdate() {
-        _camDirection = _turnedInputs;
-        if (_camDirection.z < 0) {
-            _targetDirection = new Vector3(_camDirection.x, 0, _camDirection.z * -1);
-        } else {
-            _targetDirection = new Vector3(_camDirection.x, 0, _camDirection.z);
-        }
+        float facing = test.transform.eulerAngles.y;
+        _turnedInputs = Quaternion.Euler(0, facing, 0) * _inputs;
 
-        if (_inputs != Vector3.zero) {
+        float dotProduct = Vector3.Dot(transform.forward, _body.velocity);  // if the character is facing forward
+
+        //if (dotProduct < 0) {
+        //    _targetDirection = new Vector3(_turnedInputs.x, 0, _inputs.z);
+        //}
+        //else {
+            _targetDirection = new Vector3(_turnedInputs.x, 0, _turnedInputs.z);
+        //}
+
+        if (_inputs != Vector3.zero && dotProduct >= 0) {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(_targetDirection),
@@ -65,14 +69,14 @@ public class PlayerMovement : MonoBehaviour {
         }
         
         if (_isGrounded) {
-            if (_camDirection.z < 0) {
-                _body.velocity = new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z * -1) * speed;
+            if (_turnedInputs.z < 0) {
+                _body.velocity = new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z) * speed;
             } else {
                 _body.velocity = _targetDirection.normalized * speed;    
             }
         } else {
-            if (_camDirection.z < 0) {
-                _body.AddForce(new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z * -1) * (speed * 10), ForceMode.Force);   
+            if (_turnedInputs.z < 0) {
+                _body.AddForce(new Vector3(_targetDirection.x, _targetDirection.y, _targetDirection.z) * (speed * 10), ForceMode.Force);   
             } else {
                 _body.AddForce(_targetDirection.normalized * (speed * 10), ForceMode.Force);   
             }
