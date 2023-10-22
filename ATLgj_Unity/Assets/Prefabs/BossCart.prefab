@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5401670560925274113}
   - component: {fileID: 2395914613097025196}
   - component: {fileID: 2758290554285773223}
+  - component: {fileID: 6553322919129300178}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -103,6 +104,25 @@ MonoBehaviour:
   - m_Rig: {fileID: 5618275847251651274}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &6553322919129300178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274749273980049251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97ec43eecca37742b7b17964a818579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  cart: {fileID: 0}
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2217876656908648517
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,9 +132,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6161142526096364278}
+  - component: {fileID: 4721770792242338714}
   - component: {fileID: 6745525661452259208}
   - component: {fileID: 6873823114227138435}
   - component: {fileID: 3510720733327211191}
+  - component: {fileID: 5016784704542670911}
   m_Layer: 0
   m_Name: Head
   m_TagString: Enemy
@@ -138,6 +160,62 @@ Transform:
   - {fileID: 158809410659524862}
   m_Father: {fileID: 3540012594428107128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4721770792242338714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217876656908648517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c394c906a23fa4db2bd97ba2428732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 10
+  invulnerabilityTime: 0.1
+  hitAngle: 360
+  hitForwardRotation: 360
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5016784704542670911}
+        m_TargetAssemblyTypeName: DamageVisual, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRecieveDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5016784704542670911}
+        m_TargetAssemblyTypeName: DamageVisual, Assembly-CSharp
+        m_MethodName: OnDamOnDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHitWhileInvunerable:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBecomeVunerable:
+    m_PersistentCalls:
+      m_Calls: []
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamageMessageRecievers: []
 --- !u!33 &6745525661452259208
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -209,6 +287,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3.55
   m_Center: {x: 0, y: 0, z: 2.63}
+--- !u!114 &5016784704542670911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217876656908648517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e085b53584afa148a68c730fdacbb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColor: {r: 42.722507, g: 11.4867115, b: 11.4867115, a: 1}
 --- !u!1 &2622318188302170599
 GameObject:
   m_ObjectHideFlags: 0

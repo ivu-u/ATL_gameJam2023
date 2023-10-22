@@ -237,6 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3814846877919391925}
+  - component: {fileID: 6605890441814530227}
   - component: {fileID: 6328468566568208420}
   - component: {fileID: 1033347494584007973}
   - component: {fileID: 6338317732306978576}
@@ -266,6 +267,38 @@ Transform:
   - {fileID: 1356934405318159883}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6605890441814530227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8760137958118338216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c394c906a23fa4db2bd97ba2428732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 10
+  invulnerabilityTime: 1
+  hitAngle: 360
+  hitForwardRotation: 360
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRecieveDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitWhileInvunerable:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBecomeVunerable:
+    m_PersistentCalls:
+      m_Calls: []
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamageMessageRecievers: []
 --- !u!136 &6328468566568208420
 CapsuleCollider:
   m_ObjectHideFlags: 0
