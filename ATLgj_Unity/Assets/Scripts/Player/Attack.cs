@@ -7,7 +7,7 @@ public class Attack : MonoBehaviour
     public GameObject weapon;
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.K)) {
+        if (Input.GetMouseButtonDown(0)) {
             GameObject clone;
             clone = Instantiate(weapon, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation) as GameObject;
         }

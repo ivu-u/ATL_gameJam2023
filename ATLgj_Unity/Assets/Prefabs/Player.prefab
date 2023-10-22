@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 1040678699125743073}
   - component: {fileID: 6353537900510968730}
   - component: {fileID: 6721459884235340283}
+  - component: {fileID: 2671257775416756352}
   m_Layer: 0
   m_Name: weapon
   m_TagString: Untagged
@@ -250,6 +251,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000002, y: 1.0000002, z: 0.9999999}
   m_Center: {x: -0.00000006243317, y: -0.000000109050625, z: 0}
+--- !u!114 &2671257775416756352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780676081436849738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96adbeeac1e09184a9cb5718b0423654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 4863298538440402636, guid: 42fa34bb988c7234492d0c984776130e, type: 3}
 --- !u!1 &8747172274548468554
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,10 +360,9 @@ GameObject:
   - component: {fileID: 6328468566568208420}
   - component: {fileID: 1033347494584007973}
   - component: {fileID: 6338317732306978576}
-  - component: {fileID: 6637678574141372228}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -479,19 +492,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   test: {fileID: 4728058560876682077}
---- !u!114 &6637678574141372228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8760137958118338216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96adbeeac1e09184a9cb5718b0423654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 4863298538440402636, guid: 42fa34bb988c7234492d0c984776130e, type: 3}
 --- !u!1001 &4852257879525319774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,6 +500,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3814846877919391925}
     m_Modifications:
+    - target: {fileID: 209237287095989001, guid: 42fa34bb988c7234492d0c984776130e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3778147810307493298, guid: 42fa34bb988c7234492d0c984776130e, type: 3}
       propertyPath: m_Name
       value: weaponRang
@@ -556,6 +560,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 8590620409122925036}
+    - target: {fileID: 5897022741132015706, guid: 42fa34bb988c7234492d0c984776130e, type: 3}
+      propertyPath: maxDistance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
