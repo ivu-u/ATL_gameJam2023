@@ -123,7 +123,7 @@ MonoBehaviour:
     m_Bits: 0
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
-  endPosRadius: 10
+  endPosRadius: 20
 --- !u!1 &2217876656908648517
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c394c906a23fa4db2bd97ba2428732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoints: 10
+  maxHitPoints: 3
   invulnerabilityTime: 0.1
   hitAngle: 360
   hitForwardRotation: 360
